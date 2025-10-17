@@ -1,5 +1,111 @@
 # sql
 
+Excellent question 👍 — you’re spot on to notice that **PL/SQL** feels Oracle-specific.
+
+Here’s the full picture 👇
+
+---
+
+### 🧱 Short answer:
+
+✅ **Yes — PL/SQL is Oracle’s own procedural language extension to SQL.**
+It’s **unique to Oracle Database**.
+
+But…
+🔸 **Other databases have their own similar procedural SQL languages**, just with different names.
+
+---
+
+### 🧩 Comparison across major databases
+
+| Database                 | Procedural SQL Language       | Example Block                              | Notes                                                   |
+| ------------------------ | ----------------------------- | ------------------------------------------ | ------------------------------------------------------- |
+| **Oracle**               | **PL/SQL**                    | `BEGIN DBMS_OUTPUT.PUT_LINE('Hi'); END; /` | The original procedural SQL language, very feature-rich |
+| **PostgreSQL**           | **PL/pgSQL**                  | `BEGIN RAISE NOTICE 'Hi'; END;`            | Similar syntax and concept, inspired by PL/SQL          |
+| **Microsoft SQL Server** | **T-SQL** (Transact-SQL)      | `BEGIN PRINT 'Hi'; END;`                   | Different syntax, but same idea — adds logic around SQL |
+| **MySQL / MariaDB**      | **Stored Procedure Language** | `BEGIN SELECT 'Hi'; END`                   | Simpler procedural layer                                |
+| **IBM Db2**              | **SQL PL**                    | `BEGIN ATOMIC INSERT INTO ...; END`        | IBM’s version, close to PL/SQL syntax                   |
+
+---
+
+### 💡 So in summary:
+
+* **PL/SQL = Oracle’s procedural SQL language**.
+* Other databases copied the concept but implemented their own versions with slightly different syntax.
+* If you know PL/SQL, you’ll find it easier to learn the others — they share the same logic (variables, loops, exceptions).
+
+
+
+# PL/SQL** stands for **Procedural Language / Structured Query Language**.
+
+---
+
+### 💡 In full:
+
+> **PL/SQL = Procedural Language extension to SQL**
+
+It’s Oracle’s own programming language that **extends SQL** with **programming features** like variables, loops, conditions, and error handling.
+
+---
+
+### 🧩 Why it exists:
+
+SQL by itself can **query and modify data**, but it can’t:
+
+* Store logic (like if/else or loops),
+* Handle errors gracefully,
+* Or combine multiple SQL statements into one logical unit.
+
+PL/SQL adds these abilities — it makes SQL **“programmable.”**
+
+---
+
+### 🔹 Example: Plain SQL vs PL/SQL
+
+**SQL alone:**
+
+```sql
+UPDATE employees SET salary = salary * 1.1 WHERE department_id = 10;
+```
+
+You can run it, but that’s all — no variables, no loops, no logic.
+
+---
+
+**PL/SQL version:**
+
+```sql
+DECLARE
+  v_dept_id NUMBER := 10;
+BEGIN
+  UPDATE employees
+  SET salary = salary * 1.1
+  WHERE department_id = v_dept_id;
+
+  DBMS_OUTPUT.PUT_LINE('Salaries updated for department ' || v_dept_id);
+END;
+/
+```
+
+Here, PL/SQL allows:
+
+* Variables (`v_dept_id`)
+* Logic (`BEGIN ... END`)
+* Output (`DBMS_OUTPUT.PUT_LINE`)
+
+---
+
+### ✅ In short:
+
+| Part       | Meaning                                                                                   |
+| ---------- | ----------------------------------------------------------------------------------------- |
+| **PL**     | Procedural Language — adds logic, loops, variables, etc.                                  |
+| **SQL**    | Structured Query Language — used to access and modify data                                |
+| **PL/SQL** | Combines both to let you write *programs* that interact with Oracle databases efficiently |
+
+---
+
+
 # PL SQL package
 A **PL/SQL package** in Oracle is like a **container** that groups related **procedures, functions, variables, and cursors** together — so they can be managed and used as a single unit.
 
