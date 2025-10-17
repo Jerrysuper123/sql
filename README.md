@@ -1,7 +1,7 @@
 # sql
 
 # how to schedule custom etl in Oracle sql
-```
+```sql
 -- define etl package interface
 CREATE OR REPLACE PACKAGE demo_etl AS
     PROCEDURE load_all;
