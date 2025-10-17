@@ -1,5 +1,68 @@
 # sql
 
+# how to schedule custom etl in Oracle sql
+```
+-- define etl package interface
+CREATE OR REPLACE PACKAGE demo_etl AS
+    PROCEDURE load_all;
+END demo_etl;
+/
+
+-- define etl pacakge body
+CREATE OR REPLACE PACKAGE BODY demo_etl AS
+    PROCEDURE load_all IS
+        updatedSalary number:=40;
+    BEGIN
+        update EMPLOYEES
+        set salary=updatedSalary
+        where EMP_ID=1;
+        -- print line
+        DBMS_OUTPUT.PUT_LINE('Salaries updated for ' || updatedSalary);
+        COMMIT; -- optional
+    END;
+END demo_etl;
+/
+
+-- define your schedule fequency
+BEGIN
+  DBMS_SCHEDULER.create_job(
+    job_name        => 'UpdateSalaryName',
+    job_type        => 'PLSQL_BLOCK',
+    job_action      => 'BEGIN demo_etl.load_all(); END;',
+    -- run immediately
+    start_date      => SYSTIMESTAMP,
+    -- run daily at midmight 0 hour
+    repeat_interval => 'FREQ=DAILY;BYHOUR=0',
+    -- enable the job immediately after creation
+    enabled         => TRUE,
+    -- determine if we delete the job after run, false=keep the job in the database for future run
+    auto_drop       => FALSE
+  );
+  COMMIT;
+END;
+/
+
+-- so that we can see the DBMS_OUTPUT.PUT_LINE
+SET SERVEROUTPUT ON;
+
+-- run the job
+BEGIN
+  DBMS_SCHEDULER.run_job('UpdateSalaryName');
+END;
+/
+
+-- check job status
+SELECT job_name, enabled, state, last_start_date, next_run_date
+FROM user_scheduler_jobs
+WHERE job_name = 'UPDATESALARYNAME';
+
+-- see job run logs with status: SUCCEEDED or FAILED, and additional_info: any error messages.
+SELECT log_date, status, additional_info
+FROM user_scheduler_job_run_details
+WHERE job_name = 'UPDATESALARYNAME'
+ORDER BY log_date DESC;
+```
+
 # my practice code on pl/sql
 ```
 -- update EMPLOYEES
