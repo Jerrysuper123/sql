@@ -1,5 +1,89 @@
 # sql
 
+# my practice code on pl/sql
+```
+-- update EMPLOYEES
+-- set LAST_NAME='Chen'
+-- where EMP_ID=1;
+
+select * from EMPLOYEES;
+
+-- variable
+DECLARE
+    updatedSalary number:=20;
+-- logics
+BEGIN
+    update EMPLOYEES
+    set salary=updatedSalary
+    where EMP_ID=1;
+    -- print line
+    DBMS_OUTPUT.PUT_LINE('Salaries updated for ' || updatedSalary);
+END;
+/
+
+
+
+
+-- insert into values into table
+INSERT INTO EMPLOYEES (FIRST_NAME, LAST_NAME, EMAIL, SALARY)
+VALUES ('Jane', 'Smith', 'jane.smith@example.com', 6500);
+
+-- describe the table attribute
+DESC EMPLOYEES;
+
+-- sum salary
+select sum(salary) as total_salary
+from EMPLOYEES; 
+
+
+-- below is pl/sql package and how to run the package
+-- package is like java interface
+create or replace package employee_pkg as
+    procedure add_employee(p_first_name varchar2, p_last_name varchar2, p_email varchar2, p_salary number);
+    FUNCTION get_total_salary RETURN NUMBER;
+end employee_pkg;
+/
+
+-- package body is like add implementation details for java interface
+CREATE OR REPLACE PACKAGE BODY employee_pkg as
+    PROCEDURE add_employee(p_first_name varchar2, p_last_name varchar2, p_email varchar2, p_salary number) IS
+    BEGIN
+        INSERT INTO EMPLOYEES (FIRST_NAME, LAST_NAME, EMAIL, SALARY)
+        VALUES (p_first_name, p_last_name, p_email, p_salary);
+    END;
+
+    FUNCTION get_total_salary RETURN NUMBER IS
+        v_total NUMBER;
+    BEGIN
+        SELECT SUM(SALARY) INTO v_total
+        FROM EMPLOYEES;
+
+        RETURN v_total;
+    END;
+END employee_pkg;
+/
+
+--call procedure
+DECLARE
+    v_sum NUMBER;
+    p_first_name varchar2(50) := 'tom2';
+    p_last_name varchar2(50) := 'lim';
+    p_email varchar2(100) := 'tom2@gmail.com';
+    p_salary number := 50;
+BEGIN
+    employee_pkg.add_employee(p_first_name, p_last_name, p_email, p_salary);
+    COMMIT; -- optional, depending on session settings
+    DBMS_OUTPUT.PUT_LINE('added employee ' || p_first_name);
+
+    v_sum := employee_pkg.get_total_salary;
+    DBMS_OUTPUT.PUT_LINE('Total salary = ' || v_sum);
+END;
+/
+
+
+
+```
+
 Playground and practice:
 https://freesql.com/
 
