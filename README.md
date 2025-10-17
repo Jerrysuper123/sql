@@ -64,7 +64,7 @@ ORDER BY log_date DESC;
 ```
 
 # my practice code on pl/sql
-```
+```sql
 -- update EMPLOYEES
 -- set LAST_NAME='Chen'
 -- where EMP_ID=1;
