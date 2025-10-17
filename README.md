@@ -1,5 +1,42 @@
 # sql
 
+# surrogate key is the system generated key, natural key has key like NRIC number, primary key can use either surrogate or natural key
+
+A **surrogate key** is **often used as a primary key**, but they’re not the same thing.
+
+Here’s the difference 👇
+
+### 🔹 Surrogate Key
+
+* A **system-generated** unique identifier for a record (e.g. an auto-increment ID or UUID).
+* It has **no business meaning** — it’s just used to uniquely identify a row.
+* Example: `customer_id = 101`
+
+### 🔹 Primary Key
+
+* A **constraint** in the table that uniquely identifies each record.
+* It can be based on any column(s) — either a **surrogate key** or a **natural key** (something meaningful like `email` or `NRIC`).
+
+### ✅ So in practice:
+
+* The **surrogate key is often chosen as the primary key**, because it’s simple and never changes.
+* But a **primary key doesn’t have to be a surrogate key** — it could be a natural key instead.
+
+**Example:**
+
+```sql
+CREATE TABLE customers (
+  customer_id SERIAL PRIMARY KEY,  -- surrogate key
+  email VARCHAR(255) UNIQUE,
+  name VARCHAR(100)
+);
+```
+
+Here, `customer_id` is a surrogate key **and** the primary key.
+
+Would you like me to show a case where a primary key is *not* a surrogate key (i.e. a natural key)?
+
+
 Great foundational question — let’s break it down clearly:
 
 ---
