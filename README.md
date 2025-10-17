@@ -26,6 +26,9 @@ A package has **two parts**:
 
 ```sql
 -- 1️⃣ Package specification
+-- create or replace the package with the name "employee_pkg"
+-- this is like an interface in Java
+
 CREATE OR REPLACE PACKAGE employee_pkg AS
   PROCEDURE add_employee(p_name VARCHAR2, p_salary NUMBER);
   FUNCTION get_total_employees RETURN NUMBER;
@@ -160,6 +163,115 @@ END;
 
 ---
 
+# begin and end
+Excellent — this is one of the most fundamental parts of PL/SQL 👏
+
+Let’s go step by step.
+
+---
+
+### 🧱 In simple terms:
+
+`BEGIN` and `END` mark the **start and end of a PL/SQL block** —
+they tell Oracle **“this is the code to run.”**
+
+Think of it like:
+
+```text
+BEGIN   --> start of the action
+  (your code)
+END;    --> end of the action
+```
+
+---
+
+### 💡 Every PL/SQL block has this structure:
+
+```sql
+DECLARE
+  -- (optional) variable declarations
+BEGIN
+  -- executable statements (code that runs)
+EXCEPTION
+  -- (optional) error handling
+END;
+/
+```
+
+---
+
+### 🔹 Example 1 — Anonymous block
+
+```sql
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('Hello World!');
+END;
+/
+```
+
+**What happens:**
+
+* Oracle runs everything between `BEGIN` and `END;`
+* It prints “Hello World!” to the output console.
+
+---
+
+### 🔹 Example 2 — With DECLARE
+
+```sql
+DECLARE
+  v_name VARCHAR2(50) := 'Jerry';
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('Hello, ' || v_name);
+END;
+/
+```
+
+Here:
+
+1. `DECLARE` defines a variable `v_name`.
+2. `BEGIN ... END;` runs the logic.
+3. It prints `Hello, Jerry`.
+
+---
+
+### 🔹 Example 3 — Inside a procedure or function
+
+```sql
+CREATE OR REPLACE PROCEDURE greet_user(p_name VARCHAR2) AS
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('Hello, ' || p_name);
+END;
+/
+```
+
+* The `BEGIN ... END;` block defines what the procedure **does** when called.
+* You can call it with:
+
+  ```sql
+  EXEC greet_user('John');
+  ```
+
+---
+
+### 🧠 Think of it like:
+
+| Keyword     | Meaning                                   |
+| ----------- | ----------------------------------------- |
+| **DECLARE** | (Optional) Define your variables          |
+| **BEGIN**   | Start running your code                   |
+| **END;**    | Stop the block of code                    |
+| **/**       | Execute it (in SQL*Plus or SQL Developer) |
+
+---
+
+### ✅ In short:
+
+* `BEGIN` = start of executable code
+* `END;` = end of that code block
+* Together, they define a **PL/SQL block**, the smallest runnable unit of PL/SQL.
+
+---
 
 
 # surrogate key is the system generated key, natural key has key like NRIC number, primary key can use either surrogate or natural key
