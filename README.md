@@ -1,5 +1,8 @@
 # sql
 
+Playground and practice:
+https://freesql.com/
+
 Excellent question 👍 — you’re spot on to notice that **PL/SQL** feels Oracle-specific.
 
 Here’s the full picture 👇
