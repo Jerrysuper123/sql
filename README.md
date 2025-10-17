@@ -163,6 +163,9 @@ END employee_pkg;
 ```
 
 Then you can call it like this:
+-- FROM DUAL is just used so you can run the function in a SELECT statement.
+-- So Oracle runs the function once, using the single row in DUAL, and returns the result.
+-- Oracle SQL always expects a FROM clause — even if you’re not selecting data from a table. DUAL acts as a placeholder table with exactly one row, so you can still run expressions or functions.
 
 ```sql
 EXEC employee_pkg.add_employee('John', 5000);
