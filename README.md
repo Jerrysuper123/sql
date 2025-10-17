@@ -68,6 +68,97 @@ SELECT employee_pkg.get_total_employees FROM dual;
 
 ---
 
+# what is / in sql
+Excellent question 👏
+
+The **`/` (forward slash)** in PL/SQL scripts is a **special SQL*Plus (or SQL Developer) command** — **not part of PL/SQL itself**.
+
+---
+
+### 💡 In simple terms:
+
+`/` tells Oracle **“execute the last PL/SQL block you just finished writing.”**
+
+---
+
+### 🧱 Example
+
+```sql
+CREATE OR REPLACE PACKAGE employee_pkg AS
+  PROCEDURE add_employee(p_name VARCHAR2, p_salary NUMBER);
+  FUNCTION get_total_employees RETURN NUMBER;
+END employee_pkg;
+/
+```
+
+Here’s what happens:
+
+1. The semicolon `;` ends the **last statement** in the PL/SQL block.
+2. The `/` tells the SQL tool to **send the whole package definition (from `CREATE` to `END`) to the database** for compilation.
+
+Without the `/`, the tool might think you’re still typing and not execute the code.
+
+---
+
+### ⚙️ Where It’s Needed
+
+You’ll typically use `/` after:
+
+* `CREATE OR REPLACE PACKAGE ... END;`
+* `CREATE OR REPLACE PACKAGE BODY ... END;`
+* `CREATE OR REPLACE PROCEDURE ... END;`
+* `BEGIN ... END;` anonymous blocks
+
+---
+
+### 🔍 Why It Exists
+
+When you run PL/SQL code in tools like:
+
+* **SQL*Plus**
+* **SQL Developer**
+* **SQLcl**
+
+…these tools read input **line by line**, not as one big block.
+The `/` is a signal that says:
+
+> “Okay, I’m done typing the block — now compile or run it.”
+
+---
+
+### 🧩 Example contrast:
+
+Without `/`:
+
+```sql
+CREATE OR REPLACE PROCEDURE test_proc IS
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('Hello');
+END;
+-- nothing happens yet
+```
+
+With `/`:
+
+```sql
+CREATE OR REPLACE PROCEDURE test_proc IS
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('Hello');
+END;
+/
+-- ✅ Procedure is now compiled
+```
+
+---
+
+✅ **Summary**
+
+| Symbol | Purpose                                               |
+| ------ | ----------------------------------------------------- |
+| `;`    | Ends a statement inside the block                     |
+| `/`    | Executes or compiles the *whole* block you just wrote |
+
+---
 
 
 
