@@ -1,5 +1,76 @@
 # sql
 
+# PL SQL package
+A **PL/SQL package** in Oracle is like a **container** that groups related **procedures, functions, variables, and cursors** together — so they can be managed and used as a single unit.
+
+Think of it as a **toolbox** that keeps all related tools (code objects) in one place.
+
+---
+
+### 🧱 Structure of a PL/SQL Package
+
+A package has **two parts**:
+
+1. **Package Specification** (the *interface* — what’s visible)
+
+   * Declares what can be used outside the package: procedures, functions, variables, constants, etc.
+   * Similar to a header file or API definition.
+
+2. **Package Body** (the *implementation*)
+
+   * Contains the actual code for the procedures and functions declared in the spec.
+
+---
+
+### 💡 Example
+
+```sql
+-- 1️⃣ Package specification
+CREATE OR REPLACE PACKAGE employee_pkg AS
+  PROCEDURE add_employee(p_name VARCHAR2, p_salary NUMBER);
+  FUNCTION get_total_employees RETURN NUMBER;
+END employee_pkg;
+/
+
+-- 2️⃣ Package body
+CREATE OR REPLACE PACKAGE BODY employee_pkg AS
+  v_count NUMBER := 0;
+
+  PROCEDURE add_employee(p_name VARCHAR2, p_salary NUMBER) IS
+  BEGIN
+    INSERT INTO employees (name, salary) VALUES (p_name, p_salary);
+    v_count := v_count + 1;
+  END;
+
+  FUNCTION get_total_employees RETURN NUMBER IS
+  BEGIN
+    RETURN v_count;
+  END;
+END employee_pkg;
+/
+```
+
+Then you can call it like this:
+
+```sql
+EXEC employee_pkg.add_employee('John', 5000);
+SELECT employee_pkg.get_total_employees FROM dual;
+```
+
+---
+
+### 🧠 Benefits of Using Packages
+
+* **Encapsulation:** Hides internal logic; only exposes what’s needed.
+* **Organization:** Groups related procedures and functions together.
+* **Performance:** Loaded into memory once, so repeated calls are faster.
+* **Maintainability:** Easier to update or fix one part without breaking others.
+
+---
+
+
+
+
 # surrogate key is the system generated key, natural key has key like NRIC number, primary key can use either surrogate or natural key
 
 A **surrogate key** is **often used as a primary key**, but they’re not the same thing.
